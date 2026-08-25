@@ -23,12 +23,23 @@ if not exist venv (
     call venv\Scripts\activate.bat
 )
 
+where claude >nul 2>nul
+if errorlevel 1 (
+    echo.
+    echo Claude Code CLI not found. This bot uses it to generate letters
+    echo instead of a paid API key. Install it first:
+    echo   npm install -g @anthropic-ai/claude-code
+    echo then run "claude" once to log in, and run this script again.
+    echo.
+    pause
+    exit /b 1
+)
+
 if not exist .env (
     copy .env.example .env >nul
     echo.
     echo A .env file was created. In the Notepad window that is about to open,
-    echo fill in BOT_TOKEN ^(from @BotFather^) and ANTHROPIC_API_KEY
-    echo ^(from console.anthropic.com^), then save and close it.
+    echo fill in BOT_TOKEN ^(from @BotFather^), then save and close it.
     echo.
     pause
     notepad .env

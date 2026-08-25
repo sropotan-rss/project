@@ -102,8 +102,6 @@ async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE):
 def main():
     if not config.BOT_TOKEN:
         raise ValueError("BOT_TOKEN not set")
-    if not config.ANTHROPIC_API_KEY:
-        raise ValueError("ANTHROPIC_API_KEY not set")
 
     db.init_db()
 

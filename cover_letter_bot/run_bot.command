@@ -16,13 +16,22 @@ else
     source venv/bin/activate
 fi
 
+if ! command -v claude &> /dev/null; then
+    echo ""
+    echo "Claude Code CLI not found. This bot uses it to generate letters"
+    echo "instead of a paid API key. Install it first:"
+    echo "  npm install -g @anthropic-ai/claude-code"
+    echo "then run 'claude' once to log in, and run this script again."
+    read -p "Press Enter to close..."
+    exit 1
+fi
+
 if [ ! -f ".env" ]; then
     cp .env.example .env
     echo ""
     echo "A .env file was created at $(pwd)/.env"
-    echo "Fill in BOT_TOKEN (from @BotFather) and ANTHROPIC_API_KEY"
-    echo "(from console.anthropic.com) in the editor that is about to open,"
-    echo "save it, then run this script again."
+    echo "Fill in BOT_TOKEN (from @BotFather) in the editor that is about to"
+    echo "open, save it, then run this script again."
     open -e .env
     read -p "Press Enter to close..."
     exit 1
