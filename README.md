@@ -11,14 +11,73 @@ Telegram-бот для мониторинга конкурентов:
 по команде `/check_now` вручную. Все конкуренты и параметры настраиваются
 прямо в чате с ботом, отдельно для каждого чата.
 
-## Установка
+## Установка и запуск
+
+Бот не обязан работать круглосуточно — его можно ставить один раз, а затем
+просто запускать командой, когда нужно, и останавливать (`Ctrl+C`), когда не
+нужно. Все данные (список конкурентов, последние цены, история упоминаний)
+сохраняются в файле `monitor.db` и никуда не исчезают между запусками.
+
+### Компьютер (Windows / macOS / Linux)
+
+Разовая настройка:
 
 ```bash
+git clone https://github.com/sropotan-rss/project.git
+cd project
+python3 -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
 # впишите в .env токен бота, полученный у @BotFather
+```
+
+Каждый раз, когда нужно запустить бота:
+
+```bash
+source venv/bin/activate        # Windows: venv\Scripts\activate
 python bot.py
 ```
+
+Остановить — `Ctrl+C` в терминале.
+
+### Android (через Termux)
+
+[Termux](https://f-droid.org/packages/com.termux/) — полноценный терминал
+на телефоне с доступом в интернет через мобильную сеть/Wi-Fi.
+
+Разовая настройка:
+
+```bash
+pkg install python git
+git clone https://github.com/sropotan-rss/project.git
+cd project
+pip install -r requirements.txt
+echo "BOT_TOKEN=твой_токен" > .env
+```
+
+Запуск: `python bot.py`. Остановка: `Ctrl+C`. Пока приложение Termux открыто
+(не убито системой в фоне), бот работает.
+
+### iPhone
+
+У iOS нет полноценного терминала с фоновой сетевой активностью вроде
+Termux, поэтому варианта два:
+
+1. **[iSH](https://apps.apple.com/app/ish-shell/id1436902243)** — бесплатное
+   приложение с эмуляцией Linux прямо на iPhone. Внутри него — тот же
+   сценарий, что и для Android/Termux (`apk add python3 git`, дальше как
+   выше). Работает, но медленнее из-за эмуляции.
+2. **Облачный хостинг через Safari, запуск/остановка вручную** —
+   надёжнее и без терминала на телефоне вообще. Например,
+   [Railway](https://railway.app):
+   - Зайти на railway.app с телефона, войти через GitHub
+   - New Project → Deploy from GitHub repo → выбрать этот репозиторий
+   - В Variables добавить `BOT_TOKEN`
+   - Когда бот нужен — нажать Deploy/Resume в панели Railway
+   - Когда не нужен — нажать Stop, чтобы не расходовать ресурсы впустую
+   - В репозитории уже есть `Procfile`, чтобы Railway/Render поняли, что это
+     фоновый процесс, а не веб-сервер
 
 ## Переменные окружения
 
